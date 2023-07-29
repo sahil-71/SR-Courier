@@ -7,12 +7,10 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final List<String> courierProviders = Arrays.asList("DTDC", "SHREE MARUTI", "SHREE MAHAVEER", "MADHUR", "PROFESSIONAL", "SKYKING");
+        final List<String> courierProviders = Arrays.asList("AKASH GANGA", "DELHIVERY", "DTDC", "MADHUR", "PROFESSIONAL", "SHREE MAHAVEER", "SHREE MARUTI", "SKYKING");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, R.layout.dropdown_item, courierProviders);
         AutoCompleteTextView spnCourierProvider = findViewById(R.id.spnCourierProvider);
         spnCourierProvider.setAdapter(dataAdapter);
@@ -41,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
             String consignmentMsg = edtTxtConsignment.getText().toString().isEmpty() ?
                     ". Your C.No. will be shared shortly." :
                     ". Your C.No. is " + edtTxtConsignment.getText();
-            String msg ="Hi " + edtTxtSender.getText()
-                    + ",\nYour shipment has been booked with our partner " + spnCourierProvider.getText()
+            String msg = "Shipment from " + edtTxtSender.getText()
+                    + " has been booked with " + spnCourierProvider.getText()
                     + " courier for " + edtTxtReceiver.getText()
                     + " for " + edtTxtLocation.getText()
                     + consignmentMsg
@@ -54,10 +52,14 @@ public class MainActivity extends AppCompatActivity {
             EditText edtTxtSenderMobile = findViewById(R.id.edtTxtSenderMobile);
             EditText edtTxtReceiverMobile = findViewById(R.id.edtTxtReceiverMobile);
 
-            Thread senderThread = new Thread(() -> openWhatsApp(msg, edtTxtSenderMobile.getText().toString()));
-            Thread receiverThread = new Thread(() -> openWhatsApp(msg, edtTxtReceiverMobile.getText().toString()));
-            senderThread.start();
-            receiverThread.start();
+            if (!edtTxtSenderMobile.getText().toString().isEmpty()) {
+                Thread senderThread = new Thread(() -> openWhatsApp("Hi " + edtTxtSender.getText().toString() + ",\n" + msg, edtTxtSenderMobile.getText().toString()));
+                senderThread.start();
+            }
+            if (!edtTxtReceiverMobile.getText().toString().isEmpty()) {
+                Thread receiverThread = new Thread(() -> openWhatsApp("Hi " + edtTxtReceiver.getText().toString() + ",\n" + msg, edtTxtReceiverMobile.getText().toString()));
+                receiverThread.start();
+            }
             clearData();
         });
     }
