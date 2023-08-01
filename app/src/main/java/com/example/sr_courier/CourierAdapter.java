@@ -1,67 +1,61 @@
 package com.example.sr_courier;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
-public class CourierAdapter extends RecyclerView.Adapter<CourierAdapter.ViewHolder> {
+public class CourierAdapter extends ArrayAdapter<Courier> {
     private ArrayList<Courier> couriers;
     private Context context;
 
-    public CourierAdapter(ArrayList<Courier> couriers, Context context) {
-        this.couriers = couriers;
-        this.context = context;
+    public CourierAdapter(Activity context, ArrayList<Courier> couriers) {
+        super(context, 0, couriers);
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_view_couriers, parent, false);
-        return new ViewHolder(view);
-    }
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Courier courier = couriers.get(position);
-        holder.txtSerialNumber.setText(courier.getUID());
-        holder.txtDate.setText(courier.getDate());
-        holder.txtConsignmentNumber_list.setText(courier.getConsignmentNumber());
-        holder.txtSenderName_list.setText(courier.getSenderName());
-        holder.txtSenderMobile_list.setText(courier.getSenderMobile());
-        holder.txtReceiverName_list.setText(courier.getReceiverName());
-        holder.txtReceiverMobile_list.setText(courier.getReceiverMobile());
-        holder.txtDestination_list.setText(courier.getDestination());
-    }
 
-    @Override
-    public int getItemCount() {
-        return couriers.size();
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-
-        // creating variables for our text views.
-        private TextView txtSerialNumber, txtDate, txtConsignmentNumber_list, txtSenderName_list,
+        View listItemView = convertView;
+        if (listItemView == null) {
+            listItemView = LayoutInflater.from(getContext()).inflate(R.layout.activity_view_courier_item, parent, false);
+        }
+        Courier currentCourier = getItem(position);
+        TextView txtSerialNumber, txtDate, txtConsignmentNumber_list, txtCourierProvider, txtSenderName_list,
                 txtSenderMobile_list, txtReceiverName_list, txtReceiverMobile_list, txtDestination_list;
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            // initializing our text views
-            txtSerialNumber = itemView.findViewById(R.id.txtSerialNumber);
-            txtDate = itemView.findViewById(R.id.txtDate);
-            txtConsignmentNumber_list = itemView.findViewById(R.id.txtConsignmentNumber_list);
-            txtSenderName_list = itemView.findViewById(R.id.txtSenderName_list);
-            txtSenderMobile_list = itemView.findViewById(R.id.txtSenderMobile_list);
-            txtReceiverName_list = itemView.findViewById(R.id.txtReceiverName_list);
-            txtReceiverMobile_list = itemView.findViewById(R.id.txtReceiverMobile_list);
-            txtDestination_list = itemView.findViewById(R.id.txtDestination_list);
-        }
+
+        txtSerialNumber = listItemView.findViewById(R.id.txtSerialNumber);
+        txtDate = listItemView.findViewById(R.id.txtDate);
+        txtConsignmentNumber_list = listItemView.findViewById(R.id.txtConsignmentNumber_list);
+        txtCourierProvider = listItemView.findViewById(R.id.txtCourierProvider);
+        txtSenderName_list = listItemView.findViewById(R.id.txtSenderName_list);
+        txtSenderMobile_list = listItemView.findViewById(R.id.txtSenderMobile_list);
+        txtReceiverName_list = listItemView.findViewById(R.id.txtReceiverName_list);
+        txtReceiverMobile_list = listItemView.findViewById(R.id.txtReceiverMobile_list);
+        txtDestination_list = listItemView.findViewById(R.id.txtDestination_list);
+
+        txtSerialNumber.setText(String.valueOf(currentCourier.getUID()));
+        txtDate.setText(currentCourier.getDate());
+        txtConsignmentNumber_list.setText(currentCourier.getConsignmentNumber());
+        txtCourierProvider.setText(currentCourier.getCourierProvider());
+        txtSenderName_list.setText(currentCourier.getSenderName());
+        txtSenderMobile_list.setText(currentCourier.getSenderMobile());
+        txtReceiverName_list.setText(currentCourier.getReceiverName());
+        txtReceiverMobile_list.setText(currentCourier.getReceiverMobile());
+        txtDestination_list.setText(currentCourier.getDestination());
+
+        return listItemView;
+
     }
 }

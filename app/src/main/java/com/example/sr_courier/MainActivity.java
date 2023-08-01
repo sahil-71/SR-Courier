@@ -42,17 +42,15 @@ public class MainActivity extends AppCompatActivity {
             EditText edtTxtConsignment = findViewById(R.id.edtTxtConsignment);
 
 
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
-            db.addCourier(new Courier(UID++,
+            db.addCourier(new Courier(""+UID++,
                     spnCourierProvider.getText().toString(),
                     edtTxtConsignment.getText().toString(),
                     edtTxtSender.getText().toString(),
                     edtTxtSenderMobile.getText().toString(),
                     edtTxtReceiver.getText().toString(),
                     edtTxtReceiverMobile.getText().toString(),
-                    edtTxtLocation.getText().toString(),
-                    formatter.format(new Date()).toString()));
+                    edtTxtLocation.getText().toString()));
             Log.d("","Added Courier Successfully" + UID);
 
             String consignmentMsg = edtTxtConsignment.getText().toString().isEmpty() ?
