@@ -171,12 +171,13 @@
                 android:text="Send"
                 android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/messageOutput"
+            <Button
+                android:id="@+id/btnSearchDB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/btnSend"
                 android:layout_marginTop="15dp"
+                android:text="Search"
                 android:textSize="16sp" />
         </LinearLayout>
     </ScrollView>
