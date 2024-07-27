@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">SR_Courier</string>
+    <string name="courier_provider">Courier Provider</string>
+    <string name="sender_name">Sender Name</string>
+    <string name="send">Send</string>
+    <string name="consignment_number">Consignment Number</string>
+    <string name="destination">Destination</string>
+    <string name="select_contact">Select Contact</string>
+    <string name="receiver_mobile_number">Receiver Mobile Number</string>
+    <string name="receiver_name">Receiver Name</string>
 </resources>
