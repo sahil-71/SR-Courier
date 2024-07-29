@@ -19,10 +19,22 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
-    private static final int PICK_CONTACT_REQUEST = 1; // Unique request code for picking a contact
+    private EditText edtTxtSender;
+    private EditText edtTxtSenderMobile;
     private EditText edtTxtReceiver;
     private EditText edtTxtReceiverMobile;
+    private EditText edtTxtLocation;
+    private EditText edtTxtConsignment;
+    private AutoCompleteTextView spnCourierProvider;
+    private Button btnSelectReceiverContact;
+    private Button btnSelectSenderContact;
+    private Button btnSend;
+    private int selectedContact;
+    private static final int RECEIVER_CODE = 0;
+    private static final int SENDER_CODE = 1;
+
+
+
     // Create an ActivityResultLauncher for the contacts picker
     private final ActivityResultLauncher<Intent> pickContactLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
         @Override
@@ -42,20 +54,20 @@ public class MainActivity extends AppCompatActivity {
                         phoneNumber = phoneNumber.split("\\+91")[1];
                     }
                     // Update UI with contact details
-                    edtTxtReceiver.setText(name);
-                    edtTxtReceiverMobile.setText(phoneNumber);
+                    if(selectedContact == RECEIVER_CODE) {
+                        edtTxtReceiver.setText(name);
+                        edtTxtReceiverMobile.setText(phoneNumber);
+                    }
+                    else{
+                        edtTxtSender.setText(name);
+                        edtTxtSenderMobile.setText(phoneNumber);
+                    }
 
                     cursor.close();
                 }
             }
         }
     });
-    private EditText edtTxtSender;
-    private EditText edtTxtLocation;
-    private EditText edtTxtConsignment;
-    private AutoCompleteTextView spnCourierProvider;
-    private Button btnSelectContact;
-    private Button btnSend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,16 +90,24 @@ public class MainActivity extends AppCompatActivity {
         edtTxtReceiver = findViewById(R.id.edtTxtReceiver);
         edtTxtReceiverMobile = findViewById(R.id.edtTxtReceiverMobile);
         edtTxtSender = findViewById(R.id.edtTxtSender);
+        edtTxtSenderMobile = findViewById(R.id.edtTxtSenderMobile);
         edtTxtLocation = findViewById(R.id.edtTxtLocation);
         edtTxtConsignment = findViewById(R.id.edtTxtConsignment);
         spnCourierProvider = findViewById(R.id.spnCourierProvider);
-        btnSelectContact = findViewById(R.id.selectContact);
+        btnSelectReceiverContact = findViewById(R.id.selectReceiverContact);
+        btnSelectSenderContact = findViewById(R.id.selectSenderContact);
         btnSend = findViewById(R.id.btnSend);
+        selectedContact = 0;
     }
 
     private void selectContact() {
-        btnSelectContact.setOnClickListener(view -> {
-            // Launch the contacts picker
+        btnSelectReceiverContact.setOnClickListener(view -> {
+            selectedContact = RECEIVER_CODE;
+            Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
+            pickContactLauncher.launch(intent);
+        });
+        btnSelectSenderContact.setOnClickListener(view -> {
+            selectedContact = SENDER_CODE;
             Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
             pickContactLauncher.launch(intent);
         });
@@ -103,6 +123,10 @@ public class MainActivity extends AppCompatActivity {
                 Thread receiverThread = new Thread(() -> openWhatsApp("Hi " + edtTxtReceiver.getText().toString() + ",\n" + msg, edtTxtReceiverMobile.getText().toString()));
                 receiverThread.start();
             }
+            if (!edtTxtSenderMobile.getText().toString().isEmpty()) {
+                Thread receiverThread = new Thread(() -> openWhatsApp("Hi " + edtTxtSender.getText().toString() + ",\n" + msg, edtTxtSenderMobile.getText().toString()));
+                receiverThread.start();
+            }
             clearData();
         });
     }
@@ -110,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
     private void clearData() {
         edtTxtSender.setText("");
         edtTxtReceiver.setText("");
+        edtTxtSenderMobile.setText("");
         edtTxtReceiverMobile.setText("");
         edtTxtLocation.setText("");
         edtTxtConsignment.setText("");
