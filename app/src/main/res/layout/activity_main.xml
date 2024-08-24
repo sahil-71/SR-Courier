@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:hint="Sender Name"
+                android:hint="@string/sender_name"
                 app:counterEnabled="true"
                 app:endIconMode="clear_text"
                 app:helperText="* Required"
@@ -56,6 +56,34 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtSenderMobile"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="@string/sender_mobile_number"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="10"
+                    app:endIconMode="clear_text"
+                    app:helperText="* Required"
+                    app:startIconDrawable="@drawable/ic_phone">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtTxtSenderMobile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:maxLength="10"
+                        android:textSize="16sp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/selectSenderContact"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/select_sender_contact"
+                    android:textSize="16sp"/>
 
             <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/txtReceiver"
@@ -101,10 +129,10 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
-                    android:id="@+id/selectContact"
+                    android:id="@+id/selectReceiverContact"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/select_contact"
+                    android:text="@string/select_receiver_contact"
                     android:textSize="16sp"/>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -151,7 +179,6 @@
                     android:id="@+id/btnSend"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
                     android:layout_marginTop="15dp"
                     android:text="@string/send"
                     android:textSize="16sp"/>
