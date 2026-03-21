@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
                                 photoUri,
                                 edtTxtSenderMobile.getText().toString());
                     }
+                    clearData();
                 }
             });
 
@@ -113,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
             takePictureLauncher.launch(intent);
-            clearData();
         });
     }
 
