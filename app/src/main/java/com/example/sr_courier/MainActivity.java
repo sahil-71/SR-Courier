@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
     private void openWhatsApp(String msg, String mobileNumber) {
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse("http://api.whatsapp.com/send?phone=91" + mobileNumber + "&text=" + msg));
+            intent.setData(Uri.parse("https://api.whatsapp.com/send?phone=+91" + mobileNumber + "&text=" + msg));
             startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();
