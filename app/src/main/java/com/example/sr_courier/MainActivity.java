@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
     private void sendMessage() {
         btnSend.setOnClickListener(view -> {
             String consignmentMsg = edtTxtConsignment.getText().toString().isEmpty() ? ". Your C.No. will be shared shortly." : ". Your C.No. is " + edtTxtConsignment.getText();
-            String msg = "Shipment from " + edtTxtSender.getText() + " has been booked with " + spnCourierProvider.getText() + " courier for " + edtTxtReceiver.getText() + " for " + edtTxtLocation.getText() + consignmentMsg + "\nTrack your courier at " + urlMap.getOrDefault(spnCourierProvider.getText().toString(), "") + "\nThanks \nSR Courier \nDev Nagar \nDelhi-110005";
+            String msg = "Shipment from " + edtTxtSender.getText() + " has been booked with " + spnCourierProvider.getText() + " courier for " + edtTxtReceiver.getText() + " for " + edtTxtLocation.getText() + consignmentMsg + "\nTrack your courier at " + urlMap.getOrDefault(spnCourierProvider.getText().toString(), "") + "\n\n*NO CLAIM WITHOUT INSURANCE*\n\nThanks \nSR Courier \nDev Nagar \nDelhi-110005";
 
             if (!edtTxtReceiverMobile.getText().toString().isEmpty()) {
                 Thread receiverThread = new Thread(() -> openWhatsApp("Hi " + edtTxtReceiver.getText().toString() + ",\n" + msg, edtTxtReceiverMobile.getText().toString()));
